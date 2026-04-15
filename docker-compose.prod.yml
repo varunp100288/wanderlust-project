@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  backend:
+    image: 834732843065.dkr.ecr.us-east-1.amazonaws.com/wanderlust-backend:latest
+    container_name: backend
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/wanderlust
+    depends_on:
+      - mongo
+    restart: always
+
+  frontend:
+    image: 834732843065.dkr.ecr.us-east-1.amazonaws.com/wanderlust-frontend:latest
+    container_name: frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: always
+  
+  mongo:
+    image: mongo:6
+    container_name: mongo
+    restart: always
