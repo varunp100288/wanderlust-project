@@ -8,6 +8,9 @@ RUN npm install
 
 COPY . .
 
+ARG VITE_API_PATH
+ENV VITE_API_PATH=$VITE_API_PATH
+
 RUN npm run build
 
 # Stage 2: Serve
