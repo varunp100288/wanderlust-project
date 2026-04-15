@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 import fs from "fs";
-import Post from "./models/post.js"; // 👈 apne file name ke hisab se
+import Post from "./models/post.js";
 
-const MONGO_URI = "mongodb://172.31.64.139:27017/wanderlust";
+const MONGO_URI = "mongodb://mongo:27017/wanderlust";
 
 const seedData = async () => {
   try {
@@ -12,11 +12,13 @@ const seedData = async () => {
       fs.readFileSync("./data/sample_posts.json", "utf-8")
     );
 
-    const data = rawData.map((item) => ({
-      ...item,
-      _id: item._id?.$oid || undefined,
-      timeOfPost: item.timeOfPost?.$date || new Date(),
-    }));
+    const data = rawData.map((item) => {
+      delete item._id; // 👈 IMPORTANT FIX
+      return {
+        ...item,
+        timeOfPost: item.timeOfPost?.$date || new Date(),
+      };
+    });
 
     await Post.deleteMany();
     await Post.insertMany(data);
