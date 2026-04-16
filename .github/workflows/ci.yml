@@ -71,6 +71,6 @@ jobs:
             | docker login --username AWS \
             --password-stdin 834732843065.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
 
-            docker compose -f docker-compose.prod.yml up -d --pull always
+            docker compose -f docker-compose.prod.yml up -d 
 
             docker image prune -f
