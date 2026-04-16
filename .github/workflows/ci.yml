@@ -54,13 +54,14 @@ jobs:
           script: |
             cd ~/projects/wanderlust
 
-            echo "Pulling latest images..."
-            docker compose -f docker-compose.prod.yml pull
+            echo "Logging into ECR..."
+            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} \
+            | docker login --username AWS \
+            --password-stdin 834732843065.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
 
-            echo "Restarting containers..."
-            docker compose -f docker-compose.prod.yml up -d --force-recreate
+            docker compose -f docker-compose.prod.yml up -d --pull always
 
             echo "Cleaning old images..."
-            docker image prune -af
-            
+            docker image prune -f
+
             echo "Done 🚀"
