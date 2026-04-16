@@ -26,7 +26,7 @@ jobs:
       # Backend
       - name: Build Backend Image
         run: |
-          docker build -t backend ./backend
+          docker build --no-cache -t backend ./backend
           docker tag backend:latest ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPOSITORY_BACKEND }}:latest
 
       - name: Push Backend Image
@@ -38,7 +38,7 @@ jobs:
         run: |
           docker build \
             --no-cache \
-            --build-arg VITE_API_PATH=http://100.54.104.198:5000 \
+            --build-arg VITE_API_PATH=/api \
             -t frontend ./frontend
           docker tag frontend:latest ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPOSITORY_FRONTEND }}:latest
 
@@ -60,4 +60,7 @@ jobs:
             echo "Restarting containers..."
             docker compose -f docker-compose.prod.yml up -d --force-recreate
 
+            echo "Cleaning old images..."
+            docker image prune -af
+            
             echo "Done 🚀"
