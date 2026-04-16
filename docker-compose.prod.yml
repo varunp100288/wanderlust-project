@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   backend:
-    image: 834732843065.dkr.ecr.us-east-1.amazonaws.com/wanderlust-backend:latest
+    image: 834732843065.dkr.ecr.us-east-1.amazonaws.com/wanderlust-backend:${IMAGE_TAG}
     container_name: backend
     expose:
       - "5000"
@@ -13,10 +13,12 @@ services:
     restart: always
 
   frontend:
-    image: 834732843065.dkr.ecr.us-east-1.amazonaws.com/wanderlust-frontend:latest
+    image: 834732843065.dkr.ecr.us-east-1.amazonaws.com/wanderlust-frontend:${IMAGE_TAG}
     container_name: frontend
     expose:
       - "80"
+    depends_on:
+      - backend
     restart: always
 
   nginx:
