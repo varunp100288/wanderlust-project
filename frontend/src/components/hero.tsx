@@ -8,7 +8,7 @@ function hero() {
       </p>
       <div className="cursor-text text-sm font-semibold md:text-xl">Let's go!</div>
       <div className="cursor-text text-sm font-semibold md:text-xl">I have added a image tag to docker image and pushed it to ECR</div>
-      <div className="cursor-text text-sm font-semibold md:text-xl">Image tag main branch ka use hota hai git ka ecr ke tag me</div>
+      <div className="cursor-text text-sm font-semibold md:text-xl">Image tag main branch ka use hota hai git ka ecr ke tag me.</div>
     </div>
   );
 }
